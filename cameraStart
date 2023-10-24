@@ -1,0 +1,31 @@
+#include <iostream>
+#include <string>
+#include <opencv2/opencv.hpp>
+#include <Eigen/Dense>
+using namespace std;
+
+int main() {
+    cv::VideoCapture webcam(0); // 0 represents the default camera 
+    if (!webcam.isOpened()) {
+        std::cerr << "Error: Couldn't open cameras." << std::endl;
+        return -1;
+    }
+
+    cv::Mat frame;
+    while (true) {
+        webcam >> frame;
+        if (frame.empty()) {
+            std::cerr << "Error: Couldn't capture frame." << std::endl;
+            break;
+        }
+
+        cv::imshow("InteliSense Surveillance", frame);
+        if (cv::waitKey(30) == 27) {
+            // Break the loop if the 'Esc' key is pressed
+            break;
+        }
+    }
+
+    return 0;
+
+}
